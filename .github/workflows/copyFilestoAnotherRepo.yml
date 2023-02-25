@@ -31,35 +31,21 @@ jobs:
         commit_message: 'A custom message for the commit'
           
           
-  file-sync:
-    name: File Sync
+  copy-files_DIST:
     runs-on: ubuntu-latest
-    
     steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: main
-      - name: Test Action
-        uses: ./dist
-        with:
-          DRY_RUN: true
-          FILE_PATTERNS: |
-            ^README.md$
-            ^.github/workflows/sync-.*
-          TARGET_REPOS: |
-            theangkko/BRSTEAM-OfficeAddin
-          GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: main
-      - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v2
-        with:
-          extra_plugins: |
-            "@semantic-release/commit-analyzer"
-            "@semantic-release/release-notes-generator"
-            "@semantic-release/git
-            "@semantic-release/github
-        env:
-          GH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Pushes test file
+      uses: dmnemec/copy_file_to_another_repo_action@main
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.PUBLISH_TOKEN }}
+      with:
+        source_file: './dist/*'
+        destination_repo: 'theangkko/BRSTEAM-OfficeAddin'
+        destination_folder: './'
+        user_email: 'theangkko@gmail.com.com'
+        user_name: 'theangkko'
+        commit_message: 'A custom message for the commit'
+          
