@@ -42,7 +42,7 @@ jobs:
       env:
         API_TOKEN_GITHUB: ${{ secrets.PUBLISH_TOKEN }}
       with:
-        source_file: './dist/*'
+        source_file: './dist/'
         destination_repo: 'theangkko/BRSTEAM-OfficeAddin'
         destination_folder: './'
         user_email: 'theangkko@gmail.com.com'
