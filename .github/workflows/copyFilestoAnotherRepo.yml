@@ -15,29 +15,34 @@ jobs:
   file-sync:
     name: File Sync
     runs-on: ubuntu-latest
+    
     steps:
       - uses: actions/checkout@v3
-      - uses: ./dist
-        name: "Simple"
+        with:
+          ref: main
+      - name: Test Action
+        uses: ./dist
         with:
           DRY_RUN: true
           FILE_PATTERNS: |
-            # ^README.md$
+            ^README.md$
             ^.github/workflows/sync-.*
           TARGET_REPOS: |
-            theangkko/BRSTEAM-OfficeAddin:main
-          GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
-          
-      - uses: ./
-        name: "With custom roots"
-        with:
-          DRY_RUN: true
-          FILE_PATTERNS: |
-            .*\.js
-          TARGET_REPOS: |
             theangkko/BRSTEAM-OfficeAddin
-          SRC_ROOT: "/src/"
-          TARGET_ROOT: "/target/"
           GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: main
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v2
+        with:
+          extra_plugins: |
+            "@semantic-release/commit-analyzer"
+            "@semantic-release/release-notes-generator"
+            "@semantic-release/git
+            "@semantic-release/github
+        env:
+          GH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
           
           
