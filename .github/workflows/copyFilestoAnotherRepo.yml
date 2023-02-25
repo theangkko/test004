@@ -1,0 +1,43 @@
+# Simple workflow for deploying static content to GitHub Pages
+name: 02 copy files to another Repo
+
+
+on:
+  # Runs on pushes targeting the default branch
+  # push:
+  #  branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+
+jobs:
+  file-sync:
+    name: File Sync
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./dist
+        name: "Simple"
+        with:
+          DRY_RUN: true
+          FILE_PATTERNS: |
+            # ^README.md$
+            ^.github/workflows/sync-.*
+          TARGET_REPOS: |
+            theangkko/BRSTEAM-OfficeAddin:main
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+          
+      - uses: ./
+        name: "With custom roots"
+        with:
+          DRY_RUN: true
+          FILE_PATTERNS: |
+            .*\.js
+          TARGET_REPOS: |
+            theangkko/BRSTEAM-OfficeAddin
+          SRC_ROOT: "/src/"
+          TARGET_ROOT: "/target/"
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+          
+          
