@@ -7,6 +7,8 @@ BRFLUID is the Office Add-in to help that a user find/use easily fluid poperty o
 
 Custom functions enable you to add new functions to Excel by defining those functions in JavaScript as part of an add-in. Users within Excel can access custom functions just as they would any native function in Excel, such as `SUM()`.  
 
+For USES
+
 For example <br>
  `BR.STEAM_GetValue_InputParameters (Input1, Input2 ....)` <br>
  =BR.steamHPT(pressure, Temperature) >> Get Enthalpy, kJ/kg <br>
